@@ -1,41 +1,42 @@
 /*
-RE, Last executed input:	" 1" or "1 "
 错误：
-开始没有看题，没有去掉多余空格
-迭代器的位置操作
-循环的判断条件
-注意：迭代器进行算术运算时，会判断其结果的有效性！
+注意迭代器指向的位置！
+注意：迭代器的算术运算会判断其结果的有效性！
+
+以清晰为第一目的，然后是简洁，然后是效率
 */
-#include "stdafx.h"
-
-#include "iostream"
-#include "cstdio"
-using namespace std;
-
 class Solution {
 public:
 	void reverseWords(string &s) {
-		string::iterator lastBegin, it, newIt;
-		lastBegin = newIt = it = s.begin();
-
-		while (it != s.end() && *it == ' ') it++;
-		while (it != s.end()){
-			if (*it == ' '){
-				reverseString(lastBegin, newIt - 1);
-				while (it != s.end() && *it == ' ') it++;
-				if (it != s.end() && newIt != s.end())
-					*newIt++ = ' ';
-				lastBegin = newIt;
+		//delete extra spaces
+		string::iterator newIt = s.begin();     //注意newIt指向的是下一个存放有效字符的位置
+		bool flag = false;
+		for (string::iterator it = s.begin(); it != s.end(); it++){
+			if (*it != ' '){
+				*newIt++ = *it;
+				flag = true;
 			}
-			else{
-				*newIt++ = *it++;
+			else if (*it == ' ' && flag){
+				*newIt++ = ' ';
+				flag = false;
 			}
 		}
 		if (newIt == s.begin()){
 			s.clear();
 			return;
 		}
+		if (*(newIt-1) == ' ')
+			newIt--;
 		s = s.substr(0, newIt - s.begin());
+
+        //reverse
+		string::iterator lastBegin = s.begin();
+		for (string::iterator it = s.begin(); it != s.end(); it++){
+			if (*it == ' '){
+				reverseString(lastBegin, it - 1);
+				lastBegin = it + 1;
+			}
+		}
 		reverseString(lastBegin, s.end() - 1);
 		reverseString(s.begin(), s.end() - 1);
 	}
