@@ -48,8 +48,8 @@ public:
         return minCuts[0];
     }
     
-    //DP，计算字符串的所有可能字串是不是回文串，存到一个二维数组中
-    //pal(i, j) = pal(i+1, j-1) && s[i] == s[j]
+    //计算字符串的所有可能字串是不是回文串，存到一个二维数组中
+    //O(N^2)
     bool** calPalindrome(const string str){
         //初始化
         bool **palindrome = new bool*[str.size()];
