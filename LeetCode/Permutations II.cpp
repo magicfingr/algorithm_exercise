@@ -2,7 +2,7 @@ class Solution {
 public:
     /**
      * dfs, 参考Permutations 与 Subsets II
-     * 去重：规定不能往回走重复的点，即将当前点之前的重复点标为used
+     * 去重：规定不能往回走重复的点
      */
     vector<vector<int> > permuteUnique(vector<int> &num) {
         vector<vector<int> > re;
@@ -23,8 +23,7 @@ private:
         }
         for (int i = 0; i < num.size(); i++){
             if (!used[i]){
-                // 将之前的重复点标为used
-                // 实际上检测到重复点之后，即可直接避免生成此次排列
+                // 检测到重复点，且可能往回走，则可直接避免生成此次排列
                 // 1,1,1,2
                 if(i - 1 >= 0 && num[i - 1] == num[i] && !used[i - 1])
                     continue;
